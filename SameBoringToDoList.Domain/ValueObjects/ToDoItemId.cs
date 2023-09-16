@@ -21,6 +21,5 @@ namespace SameBoringToDoList.Domain.ValueObjects
         }
 
         public static implicit operator Guid(ToDoItemId toDoItemId) => toDoItemId.Value;
-
     }
 }

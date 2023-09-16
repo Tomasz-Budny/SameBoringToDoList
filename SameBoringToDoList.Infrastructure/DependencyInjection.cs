@@ -18,6 +18,7 @@ namespace SameBoringToDoList.Infrastructure
         {
             services.AddAuth(configuration);
             services.AddScoped<IToDoListRepository, ToDoListRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             var options = configuration.GetOptions<SqlOptions>("SqlServer");
             services.AddDbContext<SameBoringToDoListDbContext>(ctx => 

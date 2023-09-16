@@ -5,6 +5,14 @@ namespace SameBoringToDoList.Domain.Errors
 {
     public static class DomainErrors
     {
+        public static readonly Error UserIdIsEmpty = new Error("UserId.IsEmpty", "UserId can not be empty!");
+        public static readonly Error UserLoginIsTooShort = new Error("UserLogin.TooShort", "User login is too short!");
+        public static readonly Error UserLoginIsTooLong = new Error("UserLogin.TooLong", "User login is too long!");
+
+        public static readonly Error CredentialIdIsEmpty = new Error("CredentialId.IsEmpty", "CredentialId can not be empty!");
+        public static readonly Func<int, Error> PasswordIsTooShort = (int minPasswordLength) => new Error("Password.TooShort", $"Provided password is too short. Minimum password length: {minPasswordLength}");
+
+
         public static readonly Error AuthorIdIsEmpty = new Error("AuthorId.IsEmpty", "authorId can not be empty!");
         public static readonly Error ToDoListIdIsEmpty = new Error("ToDoList.IdIsEmpty", "ToDoList id can not be empty!");
         public static readonly Error ToDoItemIdIsEmpty = new Error("ToDoItem.IdIsEmpty", "ToDoItem id can not be empty!");
