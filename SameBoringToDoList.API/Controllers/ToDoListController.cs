@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList;
-using SameBoringToDoList.Application.ToDoList.Queries;
+using SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById;
 
 namespace SameBoringToDoList.API.Controllers
 {

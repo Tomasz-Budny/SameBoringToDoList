@@ -5,7 +5,7 @@ using SameBoringToDoList.Domain.Repositories;
 using SameBoringToDoList.Domain.ValueObjects;
 using SameBoringToDoList.Shared.Errors;
 
-namespace SameBoringToDoList.Application.ToDoList.Queries.Handlers
+namespace SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById
 {
     public class GetToDoListByIdQueryHandler : IQueryHandler<GetToDoListByIdQuery, ToDoListDto>
     {

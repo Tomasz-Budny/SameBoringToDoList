@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
-using SameBoringToDoList.Application.ToDoItem.Commands;
-using SameBoringToDoList.Application.ToDoItem.Queries;
+using SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem;
+using SameBoringToDoList.Application.ToDoItem.Queries.GetItemsForToDoList;
 
 namespace SameBoringToDoList.API.Controllers
 {

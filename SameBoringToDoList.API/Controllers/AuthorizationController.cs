@@ -11,7 +11,7 @@ namespace SameBoringToDoList.API.Controllers
     {
         public AuthorizationController(ISender sender) : base(sender) { }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUserDto request)
         {
             var id = Guid.NewGuid();
@@ -21,7 +21,7 @@ namespace SameBoringToDoList.API.Controllers
             return result.IsSuccess ? Created(GetRequestPath(id), null) : BadRequest(result.Error);  
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginUserQuery query)
         {
             var result = await _sender.Send(query);

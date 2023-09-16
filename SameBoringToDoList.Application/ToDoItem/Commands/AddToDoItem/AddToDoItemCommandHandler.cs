@@ -4,7 +4,7 @@ using SameBoringToDoList.Domain.Repositories;
 using SameBoringToDoList.Domain.ValueObjects;
 using SameBoringToDoList.Shared.Errors;
 
-namespace SameBoringToDoList.Application.ToDoItem.Commands
+namespace SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem
 {
     public class AddToDoItemCommandHandler : ICommandHandler<AddToDoItemCommand>
     {
@@ -19,7 +19,7 @@ namespace SameBoringToDoList.Application.ToDoItem.Commands
             var toDoListId = ToDoListId.Create(request.ToDoListId);
             var toDoList = await _toDoListRepository.GetAsync(toDoListId.Value, cancellationToken);
 
-            if(toDoList == null) return ApplicationErrors.ToDoListNotFound;
+            if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
 
             var id = ToDoItemId.Create(request.itemId);
 
