@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace SameBoringToDoList.API.Controllers
 {
     [ApiController]
-    public abstract class BaseController : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
         protected readonly ISender _sender;
 
-        protected BaseController(ISender sender)
+        protected ApiController(ISender sender)
         {
             _sender = sender;
         }

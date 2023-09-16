@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using SameBoringToDoList.Shared.Services;
 
 namespace SameBoringToDoList.Shared
 {

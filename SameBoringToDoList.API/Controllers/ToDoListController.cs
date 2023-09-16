@@ -7,7 +7,7 @@ namespace SameBoringToDoList.API.Controllers
 {
     [ApiController]
     [Route("api/todo")]
-    public class ToDoListController : BaseController
+    public class ToDoListController : ApiController
     {
         public ToDoListController(ISender sender) : base(sender) { }
 
