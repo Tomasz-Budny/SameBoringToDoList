@@ -1,0 +1,9 @@
+﻿using SameBoringToDoList.Shared.Errors;
+
+namespace SameBoringToDoList.Application.Errors
+{
+    public static class ApplicationErrors
+    {
+        public static readonly Error ToDoListNotFound = new Error("ToDoList.NotFound", "to do list has not been found!");
+    }
+}
