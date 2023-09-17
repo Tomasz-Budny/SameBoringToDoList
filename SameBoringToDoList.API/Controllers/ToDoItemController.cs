@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem;
@@ -7,6 +8,7 @@ using SameBoringToDoList.Application.ToDoItem.Queries.GetItemsForToDoList;
 namespace SameBoringToDoList.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/todo/{toDoListId:guid}/item")]
     public class ToDoItemController: ApiController
     {
@@ -19,7 +21,7 @@ namespace SameBoringToDoList.API.Controllers
             var command = new AddToDoItemCommand(toDoListId, id, createToDoItem.Title, createToDoItem.Description);
             var result = await _sender.Send(command);
 
-            return result.IsSuccess ? Created(GetRequestPath(id), null) : BadRequest(result.Error);
+            return result.IsSuccess ? Created(CreatedResourceLocation(id), null) : BadRequest(result.Error);
         }
 
         [HttpGet]

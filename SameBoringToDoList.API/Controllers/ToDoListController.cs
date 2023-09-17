@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList;
 using SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById;
@@ -6,6 +7,7 @@ using SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById;
 namespace SameBoringToDoList.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/todo")]
     public class ToDoListController : ApiController
     {

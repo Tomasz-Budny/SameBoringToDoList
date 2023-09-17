@@ -18,7 +18,7 @@ namespace SameBoringToDoList.API.Controllers
             var command = new RegisterUserCommand(id, request.Login, request.Password);
             var result = await _sender.Send(command);
 
-            return result.IsSuccess ? Created(GetRequestPath(id), null) : BadRequest(result.Error);  
+            return result.IsSuccess ? Created(CreatedResourceLocation(id), null) : BadRequest(result.Error);  
         }
 
         [HttpPost("login")]

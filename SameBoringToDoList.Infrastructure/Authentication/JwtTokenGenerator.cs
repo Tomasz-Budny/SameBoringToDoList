@@ -31,6 +31,7 @@ namespace SameBoringToDoList.Infrastructure.Authentication
             );
 
             var securityToken = new JwtSecurityToken(
+                audience: _jwtSettings.Audience,
                 issuer: _jwtSettings.Issuer,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
                 claims:  claims,

@@ -31,7 +31,7 @@ namespace SameBoringToDoList.Domain.Entities
                 return computedHash.SequenceEqual(PasswordHash);
             }
         }
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
             {
