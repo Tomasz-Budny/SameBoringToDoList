@@ -18,10 +18,9 @@ namespace SameBoringToDoList.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateToDoList([FromBody] CreateToDoListDto request)
         {
-            var authorId = GetSenderId();
             var id = Guid.NewGuid();
 
-            var command = new CreateToDoListCommand(authorId, id, request.Title);
+            var command = new CreateToDoListCommand(id, request.Title);
             var result = await _sender.Send(command);
 
             return result.IsSuccess ? Created(CreateResourceLocationUrl(id), null): BadRequest(result.Error);
@@ -30,8 +29,7 @@ namespace SameBoringToDoList.API.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetToDoList([FromRoute] GetToDoListByIdDto request)
         {
-            var senderId = GetSenderId();
-            var query = new GetToDoListByIdQuery(request.Id, senderId);
+            var query = new GetToDoListByIdQuery(request.Id);
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
@@ -40,8 +38,7 @@ namespace SameBoringToDoList.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllToDoLists()
         {
-            var senderId = GetSenderId();
-            var query = new GetAllToDoListsForUserQuery(senderId);
+            var query = new GetAllToDoListsForUserQuery();
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);

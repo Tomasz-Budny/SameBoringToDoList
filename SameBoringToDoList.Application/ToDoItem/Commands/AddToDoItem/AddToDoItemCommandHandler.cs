@@ -1,5 +1,6 @@
 ﻿using SameBoringToDoList.Application.Abstractions.Messaging;
 using SameBoringToDoList.Application.Errors;
+using SameBoringToDoList.Application.Services;
 using SameBoringToDoList.Domain.Repositories;
 using SameBoringToDoList.Domain.ValueObjects;
 using SameBoringToDoList.Shared.Errors;
@@ -9,14 +10,16 @@ namespace SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem
     public class AddToDoItemCommandHandler : ICommandHandler<AddToDoItemCommand>
     {
         private readonly IToDoListRepository _toDoListRepository;
+        private readonly IUserContextService<Guid> _userContextService;
 
-        public AddToDoItemCommandHandler(IToDoListRepository toDoListRepository)
+        public AddToDoItemCommandHandler(IToDoListRepository toDoListRepository, IUserContextService<Guid> userContextService)
         {
             _toDoListRepository = toDoListRepository;
+            _userContextService = userContextService;
         }
         public async Task<Result> Handle(AddToDoItemCommand request, CancellationToken cancellationToken)
         {
-            var authorId = UserId.Create(request.authorId);
+            var authorId = UserId.Create(_userContextService.GetUserId);
             if (authorId.IsFailure) return authorId.Error;
 
             var toDoListId = ToDoListId.Create(request.ToDoListId);

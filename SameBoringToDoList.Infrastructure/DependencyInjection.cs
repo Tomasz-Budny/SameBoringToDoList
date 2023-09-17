@@ -5,12 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SameBoringToDoList.Application.Authentication;
+using SameBoringToDoList.Application.Services;
 using SameBoringToDoList.Domain.Repositories;
 using SameBoringToDoList.Infrastructure.Authentication;
 using SameBoringToDoList.Infrastructure.Authentication.Options;
 using SameBoringToDoList.Infrastructure.Persistence;
 using SameBoringToDoList.Infrastructure.Persistence.Options;
 using SameBoringToDoList.Infrastructure.Persistence.Repositories;
+using SameBoringToDoList.Infrastructure.Services;
 using SameBoringToDoList.Shared;
 using System.Text;
 
@@ -34,6 +36,9 @@ namespace SameBoringToDoList.Infrastructure
         {
             var jwtSettings = configuration.GetOptions<JwtSettings>(JwtSettings.SectionName);
             services.AddSingleton(Options.Create(jwtSettings));
+
+            services.AddSingleton<IUserContextService<Guid>, UserContextService>();
+            services.AddHttpContextAccessor();
 
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 

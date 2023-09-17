@@ -18,8 +18,7 @@ namespace SameBoringToDoList.API.Controllers
         public async Task<IActionResult> AddToDo([FromRoute] Guid toDoListId,[FromBody] CreateToDoItemDto createToDoItem)
         {
             var id = Guid.NewGuid();
-            var authorId = GetSenderId();
-            var command = new AddToDoItemCommand(toDoListId, authorId, id, createToDoItem.Title, createToDoItem.Description);
+            var command = new AddToDoItemCommand(toDoListId, id, createToDoItem.Title, createToDoItem.Description);
             var result = await _sender.Send(command);
 
             return result.IsSuccess ? Created(CreateResourceLocationUrl(id), null) : BadRequest(result.Error);
@@ -28,8 +27,7 @@ namespace SameBoringToDoList.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllToDoItems([FromRoute] Guid toDoListId)
         {
-            var senderId = GetSenderId();
-            var query = new GetItemsForToDoListQuery(toDoListId, senderId);
+            var query = new GetItemsForToDoListQuery(toDoListId);
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);

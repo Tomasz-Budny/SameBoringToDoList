@@ -2,7 +2,7 @@
 
 namespace SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList
 {
-    public record CreateToDoListCommand(Guid AuthorId, Guid ToDoListId, string Title) : ICommand
+    public record CreateToDoListCommand(Guid ToDoListId, string Title) : ICommand
     {
     }
 }
