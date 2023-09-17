@@ -30,9 +30,10 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
-        public Task UpdateAsync(User user, CancellationToken cancellationToken)
+        public async Task UpdateAsync(User user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _dbContext.Update(user);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<User> GetWithCredentialsAsync(UserId id, CancellationToken cancellationToken)

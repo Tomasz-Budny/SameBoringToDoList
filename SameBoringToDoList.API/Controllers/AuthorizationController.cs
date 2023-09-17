@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
+using SameBoringToDoList.Application.Users.Commands.ChangePassword;
 using SameBoringToDoList.Application.Users.Commands.Register;
 using SameBoringToDoList.Application.Users.Queries.Login;
 
@@ -27,6 +28,14 @@ namespace SameBoringToDoList.API.Controllers
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+        }
+
+        [HttpPatch("password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
+        {
+            var result = await _sender.Send(command);
+
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
     }
 }

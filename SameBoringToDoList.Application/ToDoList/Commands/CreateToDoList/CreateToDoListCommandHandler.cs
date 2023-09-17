@@ -27,7 +27,7 @@ namespace SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList
             var authorId = UserId.Create(_userContext.GetUserId);
             if (authorId.IsFailure) return authorId.Error;
 
-            var toDoList = new Domain.Entities.ToDoList(id.Value, title.Value, authorId.Value);
+            var toDoList = new Domain.Entities.ToDoList(id, title, authorId);
             await _toDoListRepository.AddAsync(toDoList, cancellationToken);
 
             return Result.Success();
