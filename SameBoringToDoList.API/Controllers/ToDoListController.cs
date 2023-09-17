@@ -19,7 +19,6 @@ namespace SameBoringToDoList.API.Controllers
         public async Task<IActionResult> CreateToDoList([FromBody] CreateToDoListDto request)
         {
             var id = Guid.NewGuid();
-
             var command = new CreateToDoListCommand(id, request.Title);
             var result = await _sender.Send(command);
 
@@ -42,6 +41,6 @@ namespace SameBoringToDoList.API.Controllers
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
-        }
+        } 
     }
 }

@@ -19,7 +19,7 @@ namespace SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList
 
         public async Task<Result> Handle(CreateToDoListCommand request, CancellationToken cancellationToken)
         {
-            var id = ToDoListId.Create(Guid.NewGuid());
+            var id = ToDoListId.Create(request.ToDoListId);
 
             var title = ToDoListTitle.Create(request.Title);
             if (title.IsFailure) return title.Error;
