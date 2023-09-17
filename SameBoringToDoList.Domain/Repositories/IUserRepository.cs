@@ -11,5 +11,6 @@ namespace SameBoringToDoList.Domain.Repositories
         Task DeleteAsync(UserId id, CancellationToken cancellationToken);
         Task<User> GetWithCredentialsAsync(UserId id, CancellationToken cancellationToken);
         Task<User> GetByLoginWithCredentialsAsync(UserLogin login, CancellationToken cancellationToken);
+        Task<User> GetByLoginAsync(UserLogin login, CancellationToken cancellationToken);
     }
 }

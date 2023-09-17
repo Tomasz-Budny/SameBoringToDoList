@@ -6,7 +6,7 @@ namespace SameBoringToDoList.Domain.ValueObjects
     public record ToDoListTitle
     {
         public string Value { get; set; }
-        private const int _titleMaxLength = 10;
+        private const int _titleMaxLength = 30;
 
         private ToDoListTitle(string value)
         {

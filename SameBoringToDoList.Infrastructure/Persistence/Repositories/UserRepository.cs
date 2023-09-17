@@ -48,5 +48,11 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Repositories
                 .Include(x => x.Credential)
                 .SingleOrDefaultAsync(x => x.Login == login, cancellationToken: cancellationToken);
         }
+
+        public async Task<User> GetByLoginAsync(UserLogin login, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Users
+                .SingleOrDefaultAsync(x => x.Login == login, cancellationToken: cancellationToken);
+        }
     }
 }

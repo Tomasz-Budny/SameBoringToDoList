@@ -7,11 +7,11 @@ using SameBoringToDoList.Shared.Errors;
 
 namespace SameBoringToDoList.Application.ToDoItem.Queries.GetItemsForToDoList
 {
-    public class GetItemsForToDoListHandler : IQueryHandler<GetItemsForToDoListQuery, IEnumerable<ToDoItemDto>>
+    public class GetItemsForToDoListQueryHandler : IQueryHandler<GetItemsForToDoListQuery, IEnumerable<ToDoItemDto>>
     {
         private readonly IToDoListRepository _toDoListRepository;
 
-        public GetItemsForToDoListHandler(IToDoListRepository toDoListRepository)
+        public GetItemsForToDoListQueryHandler(IToDoListRepository toDoListRepository)
         {
             _toDoListRepository = toDoListRepository;
         }
@@ -22,6 +22,11 @@ namespace SameBoringToDoList.Application.ToDoItem.Queries.GetItemsForToDoList
 
             var toDoList = await _toDoListRepository.GetAsync(toDoListId.Value, cancellationToken);
             if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
+
+            var senderId = AuthorId.Create(request.SenderId);
+            if (senderId.IsFailure) return senderId.Error;
+
+            if (toDoList.AuthorId != senderId.Value) return ApplicationErrors.ToDoListNotFound;
 
             var toDoItems = toDoList.ToDoItems.Select(item => item.AsDTO()).ToList();
             return toDoItems;

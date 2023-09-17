@@ -27,7 +27,8 @@ namespace SameBoringToDoList.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllToDoItems([FromRoute] Guid toDoListId)
         {
-            var query = new GetItemsForToDoListQuery(toDoListId);
+            var senderId = GetSenderId();
+            var query = new GetItemsForToDoListQuery(toDoListId, senderId);
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);

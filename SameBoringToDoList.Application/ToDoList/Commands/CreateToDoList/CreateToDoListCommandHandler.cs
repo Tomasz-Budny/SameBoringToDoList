@@ -18,10 +18,10 @@ namespace SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList
         {
             var id = ToDoListId.Create(Guid.NewGuid());
 
-            var title = ToDoListTitle.Create(request.title);
+            var title = ToDoListTitle.Create(request.Title);
             if (title.IsFailure) return title.Error;
 
-            var authorId = AuthorId.Create(request.authorId);
+            var authorId = AuthorId.Create(request.AuthorId);
             if (authorId.IsFailure) return authorId.Error;
 
             var toDoList = new Domain.Entities.ToDoList(id.Value, title.Value, authorId.Value);

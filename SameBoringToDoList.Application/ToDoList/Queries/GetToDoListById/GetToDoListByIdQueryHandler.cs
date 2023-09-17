@@ -17,13 +17,16 @@ namespace SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById
         }
         public async Task<Result<ToDoListDto>> Handle(GetToDoListByIdQuery request, CancellationToken cancellationToken)
         {
-            var toDoListId = ToDoListId.Create(request.id);
-
+            var toDoListId = ToDoListId.Create(request.Id);
             if (toDoListId.IsFailure) return toDoListId.Error;
 
             var toDoList = await _toDoListRepository.GetAsync(toDoListId.Value, cancellationToken);
-
             if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
+            
+            var senderId = AuthorId.Create(request.SenderId);
+            if (senderId.IsFailure) return senderId.Error;
+
+            if (toDoList.AuthorId != senderId.Value) return ApplicationErrors.ToDoListNotFound;
 
             return toDoList.AsDTO();
         }

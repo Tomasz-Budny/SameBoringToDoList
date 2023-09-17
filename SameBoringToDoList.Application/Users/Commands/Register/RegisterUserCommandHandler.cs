@@ -1,4 +1,5 @@
 ﻿using SameBoringToDoList.Application.Abstractions.Messaging;
+using SameBoringToDoList.Application.Errors;
 using SameBoringToDoList.Domain.Entities;
 using SameBoringToDoList.Domain.Repositories;
 using SameBoringToDoList.Domain.ValueObjects;
@@ -22,6 +23,9 @@ namespace SameBoringToDoList.Application.Users.Commands.Register
             var login = UserLogin.Create(request.Login);
             if (login.IsFailure) return login.Error;
 
+            var user = await _userRepository.GetByLoginAsync(login.Value, cancellationToken);
+            if (user is not null) return ApplicationErrors.UserAlreadyExists;
+
             var credentialId = CredentialId.Create(Guid.NewGuid());
             if(credentialId.IsFailure) return credentialId.Error;
 
@@ -30,8 +34,8 @@ namespace SameBoringToDoList.Application.Users.Commands.Register
 
             var credential = new Credential(credentialId.Value, password.Value);
 
-            var user = new User(id.Value, login.Value, credential);
-            await _userRepository.AddAsync(user, cancellationToken);
+            var nwUser = new User(id.Value, login.Value, credential);
+            await _userRepository.AddAsync(nwUser, cancellationToken);
 
             return Result.Success();
         }
