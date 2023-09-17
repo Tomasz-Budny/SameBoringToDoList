@@ -18,7 +18,8 @@ namespace SameBoringToDoList.API.Controllers
         public async Task<IActionResult> AddToDo([FromRoute] Guid toDoListId,[FromBody] CreateToDoItemDto createToDoItem)
         {
             var id = Guid.NewGuid();
-            var command = new AddToDoItemCommand(toDoListId, id, createToDoItem.Title, createToDoItem.Description);
+            var authorId = GetSenderId();
+            var command = new AddToDoItemCommand(toDoListId, authorId, id, createToDoItem.Title, createToDoItem.Description);
             var result = await _sender.Send(command);
 
             return result.IsSuccess ? Created(CreateResourceLocationUrl(id), null) : BadRequest(result.Error);

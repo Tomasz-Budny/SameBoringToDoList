@@ -16,12 +16,15 @@ namespace SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem
         }
         public async Task<Result> Handle(AddToDoItemCommand request, CancellationToken cancellationToken)
         {
-            var toDoListId = ToDoListId.Create(request.ToDoListId);
-            var toDoList = await _toDoListRepository.GetAsync(toDoListId.Value, cancellationToken);
+            var authorId = UserId.Create(request.authorId);
+            if (authorId.IsFailure) return authorId.Error;
 
+            var toDoListId = ToDoListId.Create(request.ToDoListId);
+            var toDoList = await _toDoListRepository.GetAsync(authorId, toDoListId, cancellationToken);
             if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
 
             var id = ToDoItemId.Create(request.itemId);
+            if (id.IsFailure) return id.Error;
 
             var title = ToDoItemTitle.Create(request.Title);
             if (title.IsFailure) return title.Error;
@@ -29,7 +32,7 @@ namespace SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem
             var description = ToDoItemDescription.Create(request.Description);
             if (description.IsFailure) return description.Error;
 
-            var toDoItem = new Domain.Entities.ToDoItem(id.Value, title.Value, description.Value, false);
+            var toDoItem = new Domain.Entities.ToDoItem(id, title, description, false);
 
             toDoList.Add(toDoItem);
 

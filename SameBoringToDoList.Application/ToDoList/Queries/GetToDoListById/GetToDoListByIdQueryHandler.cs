@@ -20,13 +20,11 @@ namespace SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById
             var toDoListId = ToDoListId.Create(request.Id);
             if (toDoListId.IsFailure) return toDoListId.Error;
 
-            var toDoList = await _toDoListRepository.GetAsync(toDoListId.Value, cancellationToken);
-            if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
-            
             var senderId = UserId.Create(request.SenderId);
             if (senderId.IsFailure) return senderId.Error;
 
-            if (toDoList.AuthorId != senderId.Value) return ApplicationErrors.ToDoListNotFound;
+            var toDoList = await _toDoListRepository.GetAsync(senderId, toDoListId, cancellationToken);
+            if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
 
             return toDoList.AsDTO();
         }

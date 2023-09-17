@@ -25,11 +25,11 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<ToDoList> GetAsync(ToDoListId id, CancellationToken cancellationToken)
+        public async Task<ToDoList> GetAsync(UserId authorId, ToDoListId id, CancellationToken cancellationToken)
         {
             return await _dbContext.ToDoLists
                 .Include(x => x.ToDoItems)
-                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(x => x.Id == id && x.AuthorId == authorId, cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<ToDoList>> GetAllListsForUserAsync(UserId id, CancellationToken cancellationToken)
