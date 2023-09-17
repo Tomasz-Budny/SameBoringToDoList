@@ -21,7 +21,7 @@ namespace SameBoringToDoList.API.Controllers
             var command = new AddToDoItemCommand(toDoListId, id, createToDoItem.Title, createToDoItem.Description);
             var result = await _sender.Send(command);
 
-            return result.IsSuccess ? Created(CreatedResourceLocation(id), null) : BadRequest(result.Error);
+            return result.IsSuccess ? Created(CreateResourceLocationUrl(id), null) : BadRequest(result.Error);
         }
 
         [HttpGet]

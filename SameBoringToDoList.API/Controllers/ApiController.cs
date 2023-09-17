@@ -15,7 +15,7 @@ namespace SameBoringToDoList.API.Controllers
             _sender = sender;
         }
 
-        protected string CreatedResourceLocation(object id)
+        protected string CreateResourceLocationUrl(object id)
         {
             return $"{Request.Path.Value}/{id}";
         }
