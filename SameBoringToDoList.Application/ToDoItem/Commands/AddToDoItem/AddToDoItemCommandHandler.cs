@@ -10,16 +10,16 @@ namespace SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem
     public class AddToDoItemCommandHandler : ICommandHandler<AddToDoItemCommand>
     {
         private readonly IToDoListRepository _toDoListRepository;
-        private readonly IUserContextService<Guid> _userContextService;
+        private readonly IUserContextService<Guid> _userContext;
 
         public AddToDoItemCommandHandler(IToDoListRepository toDoListRepository, IUserContextService<Guid> userContextService)
         {
             _toDoListRepository = toDoListRepository;
-            _userContextService = userContextService;
+            _userContext = userContextService;
         }
         public async Task<Result> Handle(AddToDoItemCommand request, CancellationToken cancellationToken)
         {
-            var authorId = UserId.Create(_userContextService.GetUserId);
+            var authorId = UserId.Create(_userContext.GetUserId);
             if (authorId.IsFailure) return authorId.Error;
 
             var toDoListId = ToDoListId.Create(request.ToDoListId);
@@ -37,7 +37,8 @@ namespace SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem
 
             var toDoItem = new Domain.Entities.ToDoItem(id, title, description, false);
 
-            toDoList.Add(toDoItem);
+            var addResult = toDoList.Add(toDoItem);
+            if (addResult.IsFailure) return addResult.Error;
 
             await _toDoListRepository.UpdateAsync(toDoList, cancellationToken);
 

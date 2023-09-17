@@ -39,6 +39,14 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Repositories
                 .ToListAsync(cancellationToken: cancellationToken);
         }
 
+        public async Task<IEnumerable<ToDoList>> GetAllListsWithItemsForUserAsync(UserId id, CancellationToken cancellationToken)
+        {
+            return await _dbContext.ToDoLists
+                .Where(x => x.AuthorId == id)
+                .Include(x => x.ToDoItems)
+                .ToListAsync(cancellationToken: cancellationToken);
+        }
+
         public async Task UpdateAsync(ToDoList toDoList, CancellationToken cancellationToken)
         {
             _dbContext.Update(toDoList);

@@ -20,10 +20,15 @@ namespace SameBoringToDoList.Domain.Entities
             AuthorId = authorId;
         }
 
-        public void Add(ToDoItem toDoItem)
+        public Result Add(ToDoItem toDoItem)
         {
+            var alreadyExists = _toDoItems.Any(x => x.Title == toDoItem.Title);
+            if (alreadyExists) return DomainErrors.ToDoItemWithTitleExists;
+
             _toDoItems.Add(toDoItem);
             AddEvent(new ToDoItemAdded(this, toDoItem));
+
+            return Result.Success();
         }
 
         public Result Remove(ToDoItem toDoItem)

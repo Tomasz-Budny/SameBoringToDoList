@@ -11,5 +11,12 @@
         {
             return new(obj.Title.Value, obj.Description, obj.IsDone);
         }
+
+        public static ToDoListWithItemsDto AsDtoWithItems(this Domain.Entities.ToDoList obj)
+        {
+            var items = obj.ToDoItems.Select(i => i.AsDTO());
+
+            return new(obj.Id.Value, obj.Title.Value, items);
+        }
     }
 }

@@ -16,6 +16,9 @@ namespace SameBoringToDoList.Domain.Errors
         public static readonly Error AuthorIdIsEmpty = new Error("AuthorId.IsEmpty", "authorId can not be empty!");
         public static readonly Error ToDoListIdIsEmpty = new Error("ToDoList.IdIsEmpty", "ToDoList id can not be empty!");
         public static readonly Error ToDoItemIdIsEmpty = new Error("ToDoItem.IdIsEmpty", "ToDoItem id can not be empty!");
+        public static readonly Error ToDoItemWithTitleExists = new Error("ToDoItem.Exists", "ToDoItem with provided title already exists!");
+
+
         public static readonly Func<int, Error> ToDoItemTitleIsTooLong = (int maxLength) => new Error("ToDoItem.TitleTooLong", $"ToDoItem title is too long! Maximum acceptable length is {maxLength}.");
         public static readonly Func<int, Error> ToDoItemDescriptionIsTooLong = (int maxLength) => new Error("ToDoItem.DescriptionTooLong", $"ToDoItem description is too long! Maximum acceptable length is {maxLength}.");
         public static readonly Func<int, Error> ToDoListTitleIsTooLong = (int maxLength) => new Error("ToDoList.TitleTooLong", $"ToDoList title is too long! Maximum acceptable length is {maxLength}.");
