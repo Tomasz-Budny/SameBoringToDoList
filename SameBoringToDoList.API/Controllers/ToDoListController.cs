@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList;
+using SameBoringToDoList.Application.ToDoList.Queries.GetAllToDoListsForUser;
 using SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById;
 
 namespace SameBoringToDoList.API.Controllers
@@ -31,6 +32,16 @@ namespace SameBoringToDoList.API.Controllers
         {
             var senderId = GetSenderId();
             var query = new GetToDoListByIdQuery(request.Id, senderId);
+            var result = await _sender.Send(query);
+
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllToDoLists()
+        {
+            var senderId = GetSenderId();
+            var query = new GetAllToDoListsForUserQuery(senderId);
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);

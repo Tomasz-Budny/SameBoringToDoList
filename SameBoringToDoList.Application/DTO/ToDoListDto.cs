@@ -1,6 +1,6 @@
 ﻿namespace SameBoringToDoList.Application.DTO
 {
-    public record ToDoListDto(Guid Id, string Title, string Description)
+    public record ToDoListDto(Guid Id, string Title)
     {
     }
 }

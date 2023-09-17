@@ -13,5 +13,8 @@
         public static implicit operator Result<TValue>(TValue value) => Success(value);
 
         public static implicit operator Result<TValue>(Error error) => Failure<TValue>(error);
+
+        public static implicit operator TValue(Result<TValue> value) => value.Value;
+
     }
 }
