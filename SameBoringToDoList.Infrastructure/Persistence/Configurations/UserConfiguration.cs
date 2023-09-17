@@ -35,13 +35,9 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Configurations
             builder.OwnsOne(x => x.Credential, cb =>
             {
                 cb.ToTable("credentials");
+                cb.Property<Guid>("Id");
                 cb.HasKey("Id", "UserId");
                 cb.WithOwner().HasForeignKey("UserId");
-                cb.Property(x => x.Id)
-                    .HasConversion(
-                    id => id.Value,
-                    value => CredentialId.Create(value).Value
-                );
             });
         }
     }

@@ -1,7 +1,6 @@
 ﻿using SameBoringToDoList.Application.Abstractions.Messaging;
 using SameBoringToDoList.Application.Errors;
 using SameBoringToDoList.Application.Services;
-using SameBoringToDoList.Domain.Entities;
 using SameBoringToDoList.Domain.Repositories;
 using SameBoringToDoList.Domain.ValueObjects;
 using SameBoringToDoList.Shared.Errors;
@@ -32,9 +31,7 @@ namespace SameBoringToDoList.Application.Users.Commands.ChangePassword
             var newPassword = Password.Create(request.NewPassword);
             if (newPassword.IsFailure) return newPassword.Error;
 
-            var credentialId = CredentialId.Create(Guid.NewGuid());
-
-            var newCredentials = new Credential(credentialId, newPassword);
+            var newCredentials = Credential.Create(newPassword);
             user.Credential = newCredentials;
             await _userRepository.UpdateAsync(user, cancellationToken);
 

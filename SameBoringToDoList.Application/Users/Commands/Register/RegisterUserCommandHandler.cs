@@ -26,15 +26,12 @@ namespace SameBoringToDoList.Application.Users.Commands.Register
             var user = await _userRepository.GetByLoginAsync(login.Value, cancellationToken);
             if (user is not null) return ApplicationErrors.UserAlreadyExists;
 
-            var credentialId = CredentialId.Create(Guid.NewGuid());
-            if(credentialId.IsFailure) return credentialId.Error;
-
             var password = Password.Create(request.Password);
             if (password.IsFailure) return password.Error;
 
-            var credential = new Credential(credentialId.Value, password.Value);
+            var credential = Credential.Create(password);
 
-            var nwUser = new User(id.Value, login.Value, credential);
+            var nwUser = new User(id, login, credential);
             await _userRepository.AddAsync(nwUser, cancellationToken);
 
             return Result.Success();

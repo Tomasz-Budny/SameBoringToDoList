@@ -1,26 +1,25 @@
-﻿using SameBoringToDoList.Domain.ValueObjects;
-using SameBoringToDoList.Shared.Domain.Primitives;
+﻿using SameBoringToDoList.Shared.Domain.Primitives;
+using SameBoringToDoList.Shared.Errors;
 using System.Security.Cryptography;
 
-namespace SameBoringToDoList.Domain.Entities
+namespace SameBoringToDoList.Domain.ValueObjects
 {
-    public class Credential: Entity<CredentialId>
+    public record Credential
     {
         public byte[] PasswordHash { get; private set; }
         public byte[] PasswordSalt { get; private set; }
 
-        public Credential(CredentialId id, byte[] passwordHash, byte[] passwordSalt): base(id)
+        public Credential(byte[] passwordHash, byte[] passwordSalt)
         {
             PasswordHash = passwordHash;
             PasswordSalt = passwordSalt;
         }
 
-        public Credential(CredentialId id, Password password): base(id)
+        public static Result<Credential> Create(Password password)
         {
             CreatePasswordHash(password.Value, out byte[] passwordHash, out byte[] passwordSalt);
 
-            PasswordHash = passwordHash;
-            PasswordSalt = passwordSalt;
+            return new Credential(passwordHash, passwordSalt);
         }
 
         public bool ValidatePassword(string password)
