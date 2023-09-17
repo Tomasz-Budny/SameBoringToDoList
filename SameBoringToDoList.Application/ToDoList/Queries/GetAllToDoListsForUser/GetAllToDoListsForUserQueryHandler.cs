@@ -17,7 +17,7 @@ namespace SameBoringToDoList.Application.ToDoList.Queries.GetAllToDoListsForUser
         }
         public async Task<Result<IEnumerable<ToDoListDto>>> Handle(GetAllToDoListsForUserQuery request, CancellationToken cancellationToken)
         {
-            var senderId = AuthorId.Create(request.SenderId);
+            var senderId = UserId.Create(request.SenderId);
             if (senderId.IsFailure) return senderId.Error;
 
             var toDoLists = await _toDoListRepository.GetAllListsForUserAsync(senderId, cancellationToken);

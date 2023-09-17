@@ -9,12 +9,12 @@ namespace SameBoringToDoList.Domain.Entities
     public class ToDoList: AggregateRoot<ToDoListId>
     {
         public ToDoListTitle Title { get; set; }
-        public AuthorId AuthorId { get; set; }
+        public UserId AuthorId { get; set; }
 
         protected List<ToDoItem> _toDoItems = new List<ToDoItem>();
         public IReadOnlyList<ToDoItem> ToDoItems => _toDoItems.AsReadOnly();
 
-        public ToDoList(ToDoListId Id, ToDoListTitle title, AuthorId authorId): base(Id) 
+        public ToDoList(ToDoListId Id, ToDoListTitle title, UserId authorId): base(Id) 
         {
             Title = title;
             AuthorId = authorId;

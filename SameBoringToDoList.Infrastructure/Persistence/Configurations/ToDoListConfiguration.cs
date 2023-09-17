@@ -33,7 +33,7 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Configurations
             builder.Property(x => x.AuthorId)
                 .HasConversion(
                 id => id.Value,
-                value => AuthorId.Create(value).Value
+                value => UserId.Create(value).Value
             );
         }
 

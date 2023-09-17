@@ -32,7 +32,7 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
-        public async Task<IEnumerable<ToDoList>> GetAllListsForUserAsync(AuthorId id, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ToDoList>> GetAllListsForUserAsync(UserId id, CancellationToken cancellationToken)
         {
             return await _dbContext.ToDoLists
                 .Where(x => x.AuthorId == id)
