@@ -23,7 +23,8 @@ namespace SameBoringToDoList.Application.Users.Commands.ChangePassword
             var userId = UserId.Create(_userContext.GetUserId);
             if (userId.IsFailure) return userId.Error;
 
-            var user = await _userRepository.GetWithCredentialsAsync(userId, cancellationToken);
+            var user = await _userRepository.GetVerifiedWithCredentialsAsync(userId, cancellationToken);
+            if (user is null) return ApplicationErrors.UserNotFound;
 
             var passwordIsInvalid = !user.Credential.ValidatePassword(request.CurrentPassword);
             if (passwordIsInvalid) return ApplicationErrors.PasswordIsInvalid;

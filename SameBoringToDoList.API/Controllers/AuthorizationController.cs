@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.Users.Commands.ChangePassword;
+using SameBoringToDoList.Application.Users.Commands.ConfirmEmail;
 using SameBoringToDoList.Application.Users.Commands.Register;
 using SameBoringToDoList.Application.Users.Queries.Login;
 
@@ -28,6 +29,15 @@ namespace SameBoringToDoList.API.Controllers
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+        }
+
+        [HttpPatch("confirm")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] Guid verificationToken)
+        {
+            var command = new ConfirmEmailCommand(verificationToken);
+            var result = await _sender.Send(command);
+
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
         [HttpPatch("password")]

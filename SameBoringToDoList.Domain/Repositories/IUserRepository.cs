@@ -12,5 +12,8 @@ namespace SameBoringToDoList.Domain.Repositories
         Task<User> GetWithCredentialsAsync(UserId id, CancellationToken cancellationToken);
         Task<User> GetByEmailWithCredentialsAsync(Email email, CancellationToken cancellationToken);
         Task<User> GetByEmailAsync(Email email, CancellationToken cancellationToken);
+        Task<User> GetByVerificationTokenAsync(Guid token, CancellationToken cancellationToken);
+        Task<User> GetVerifiedWithCredentialsAsync(UserId id, CancellationToken cancellationToken);
+        Task<User> GetVerifiedByEmailWithCredentialsAsync(Email email, CancellationToken cancellationToken);
     }
 }
