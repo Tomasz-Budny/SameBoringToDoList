@@ -21,12 +21,12 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Configurations
                 .ValueGeneratedNever()
                 .HasConversion(
                 id => id.Value,
-                value => UserId.Create(value).Value
+                value => UserId.Create(value)
             );
             builder.Property(x => x.Login)
                 .HasConversion(
                 login => login.Value,
-                value => UserLogin.Create(value).Value
+                value => UserLogin.Create(value)
             );
         }
 

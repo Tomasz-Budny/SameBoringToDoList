@@ -21,19 +21,19 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Configurations
                 .ValueGeneratedNever()
                 .HasConversion(
                 id => id.Value,
-                value => ToDoListId.Create(value).Value
+                value => ToDoListId.Create(value)
             );
 
             builder.Property(x => x.Title)
                 .HasConversion(
                 title => title.Value,
-                value => ToDoListTitle.Create(value).Value
+                value => ToDoListTitle.Create(value)
             );
 
             builder.Property(x => x.AuthorId)
                 .HasConversion(
                 id => id.Value,
-                value => UserId.Create(value).Value
+                value => UserId.Create(value)
             );
         }
 
@@ -47,18 +47,18 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Configurations
                 ib.Property(x => x.Id)
                     .HasConversion(
                     id => id.Value,
-                    value => ToDoItemId.Create(value).Value
+                    value => ToDoItemId.Create(value)
                 );
                 ib.Property(x => x.Title)
                     .HasConversion(
                     title => title.Value,
-                    value => ToDoItemTitle.Create(value).Value
+                    value => ToDoItemTitle.Create(value)
                 );
 
                 ib.Property(x => x.Description)
                     .HasConversion(
                     description => description.Value,
-                    value => ToDoItemDescription.Create(value).Value
+                    value => ToDoItemDescription.Create(value)
                 );
             });
 

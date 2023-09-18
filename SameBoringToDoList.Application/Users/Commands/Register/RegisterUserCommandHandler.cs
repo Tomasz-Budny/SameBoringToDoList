@@ -31,8 +31,8 @@ namespace SameBoringToDoList.Application.Users.Commands.Register
 
             var credential = Credential.Create(password);
 
-            var nwUser = new User(id, login, credential);
-            await _userRepository.AddAsync(nwUser, cancellationToken);
+            var newUser = new User(id, login, credential);
+            await _userRepository.AddAsync(newUser, cancellationToken);
 
             return Result.Success();
         }
