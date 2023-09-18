@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SameBoringToDoList.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using SameBoringToDoList.Infrastructure.Persistence;
 namespace SameBoringToDoList.Infrastructure.Migrations
 {
     [DbContext(typeof(SameBoringToDoListDbContext))]
-    partial class SameBoringToDoListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230918105107_Add_Email_Ver_Details")]
+    partial class Add_Email_Ver_Details
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

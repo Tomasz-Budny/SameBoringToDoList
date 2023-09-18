@@ -9,6 +9,9 @@ namespace SameBoringToDoList.Domain.Errors
         public static readonly Error UserLoginIsTooShort = new Error("UserLogin.TooShort", "User login is too short!");
         public static readonly Error UserLoginIsTooLong = new Error("UserLogin.TooLong", "User login is too long!");
 
+        public static readonly Error EmailIsInvalid = new Error("Email.IsInvalid", "Provided email is in invalid format!");
+
+
         public static readonly Error CredentialIdIsEmpty = new Error("CredentialId.IsEmpty", "CredentialId can not be empty!");
         public static readonly Func<int, Error> PasswordIsTooShort = (int minPasswordLength) => new Error("Password.TooShort", $"Provided password is too short. Minimum password length: {minPasswordLength}");
 

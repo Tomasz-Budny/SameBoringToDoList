@@ -16,7 +16,7 @@ namespace SameBoringToDoList.API.Controllers
         public async Task<IActionResult> Register(RegisterUserDto request)
         {
             var id = Guid.NewGuid();
-            var command = new RegisterUserCommand(id, request.Login, request.Password);
+            var command = new RegisterUserCommand(id, request.Email, request.Password);
             var result = await _sender.Send(command);
 
             return result.IsSuccess ? Created(CreateResourceLocationUrl(id), null) : BadRequest(result.Error);  

@@ -23,10 +23,10 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Configurations
                 id => id.Value,
                 value => UserId.Create(value)
             );
-            builder.Property(x => x.Login)
+            builder.Property(x => x.Email)
                 .HasConversion(
                 login => login.Value,
-                value => UserLogin.Create(value)
+                value => Email.Create(value)
             );
         }
 

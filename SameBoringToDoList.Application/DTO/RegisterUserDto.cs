@@ -1,4 +1,4 @@
 ﻿namespace SameBoringToDoList.Application.DTO
 {
-    public record RegisterUserDto(string Login, string Password);
+    public record RegisterUserDto(string Email, string Password);
 }

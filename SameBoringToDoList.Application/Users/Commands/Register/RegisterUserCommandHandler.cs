@@ -17,13 +17,13 @@ namespace SameBoringToDoList.Application.Users.Commands.Register
         }
         public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var id = UserId.Create(request.userId);
+            var id = UserId.Create(request.UserId);
             if (id.IsFailure) return id.Error;
 
-            var login = UserLogin.Create(request.Login);
-            if (login.IsFailure) return login.Error;
+            var email = Email.Create(request.Email);
+            if (email.IsFailure) return email.Error;
 
-            var user = await _userRepository.GetByLoginAsync(login.Value, cancellationToken);
+            var user = await _userRepository.GetByEmailAsync(email.Value, cancellationToken);
             if (user is not null) return ApplicationErrors.UserAlreadyExists;
 
             var password = Password.Create(request.Password);
@@ -31,7 +31,7 @@ namespace SameBoringToDoList.Application.Users.Commands.Register
 
             var credential = Credential.Create(password);
 
-            var newUser = new User(id, login, credential);
+            var newUser = new User(id, email, credential);
             await _userRepository.AddAsync(newUser, cancellationToken);
 
             return Result.Success();

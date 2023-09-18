@@ -2,5 +2,5 @@
 
 namespace SameBoringToDoList.Application.Users.Commands.Register
 {
-    public record RegisterUserCommand(Guid userId, string Login, string Password) : ICommand;
+    public record RegisterUserCommand(Guid UserId, string Email, string Password) : ICommand;
 }

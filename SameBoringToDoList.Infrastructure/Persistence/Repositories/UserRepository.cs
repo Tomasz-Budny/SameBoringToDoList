@@ -43,17 +43,17 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
-        public async Task<User> GetByLoginWithCredentialsAsync(UserLogin login, CancellationToken cancellationToken)
+        public async Task<User> GetByEmailWithCredentialsAsync(Email email, CancellationToken cancellationToken)
         {
             return await _dbContext.Users
                 .Include(x => x.Credential)
-                .SingleOrDefaultAsync(x => x.Login == login, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
         }
 
-        public async Task<User> GetByLoginAsync(UserLogin login, CancellationToken cancellationToken)
+        public async Task<User> GetByEmailAsync(Email email, CancellationToken cancellationToken)
         {
             return await _dbContext.Users
-                .SingleOrDefaultAsync(x => x.Login == login, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
         }
     }
 }

@@ -23,12 +23,12 @@ namespace SameBoringToDoList.Application.Users.Queries.Login
 
         public async Task<Result<string>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
-            var login = UserLogin.Create(request.login);
-            if (login.IsFailure) return login.Error;
+            var email = Email.Create(request.Email);
+            if (email.IsFailure) return email.Error;
 
-            var user = await _userRepository.GetByLoginWithCredentialsAsync(login.Value, cancellationToken);
+            var user = await _userRepository.GetByEmailWithCredentialsAsync(email.Value, cancellationToken);
 
-            var isPasswordInvalid = !user.Credential.ValidatePassword(request.password);
+            var isPasswordInvalid = !user.Credential.ValidatePassword(request.Password);
             if (isPasswordInvalid) return ApplicationErrors.PasswordIsInvalid;
 
             _smtp.SendConfirmationEmail("tamia.bergnaum0@ethereal.email");
