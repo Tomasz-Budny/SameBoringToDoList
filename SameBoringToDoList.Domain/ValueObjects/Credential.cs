@@ -14,7 +14,13 @@ namespace SameBoringToDoList.Domain.ValueObjects
         public Guid PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
 
-
+        public Credential(byte[] passwordHash, byte[] passwordSalt, Guid verificationToken, DateTime? verifiedAt, Guid passwordResetToken, DateTime? resetTokenExpires) : this(passwordHash, passwordSalt)
+        {
+            VerificationToken = verificationToken;
+            VerifiedAt = verifiedAt;
+            PasswordResetToken = passwordResetToken;
+            ResetTokenExpires = resetTokenExpires;
+        }
 
         public Credential(byte[] passwordHash, byte[] passwordSalt)
         {
@@ -26,7 +32,10 @@ namespace SameBoringToDoList.Domain.ValueObjects
         {
             CreatePasswordHash(password.Value, out byte[] passwordHash, out byte[] passwordSalt);
 
-            return new Credential(passwordHash, passwordSalt);
+            return new Credential(passwordHash, passwordSalt)
+            {
+                VerificationToken = Guid.NewGuid(),
+            };
         }
 
         public bool ValidatePassword(string password)

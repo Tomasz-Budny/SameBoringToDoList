@@ -12,13 +12,11 @@ namespace SameBoringToDoList.Application.Users.Queries.Login
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _jwt;
-        private readonly ISmtpService _smtp;
 
-        public LoginUserQueryHandler(IUserRepository userRepository, IJwtTokenGenerator jwt, ISmtpService smtpService)
+        public LoginUserQueryHandler(IUserRepository userRepository, IJwtTokenGenerator jwt)
         {
             _userRepository = userRepository;
             _jwt = jwt;
-            _smtp = smtpService;
         }
 
         public async Task<Result<string>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
@@ -27,11 +25,12 @@ namespace SameBoringToDoList.Application.Users.Queries.Login
             if (email.IsFailure) return email.Error;
 
             var user = await _userRepository.GetByEmailWithCredentialsAsync(email.Value, cancellationToken);
+            if (user is null) return ApplicationErrors.UserNotFound;
+
+            if (user.Credential.VerifiedAt is null) return ApplicationErrors.UserNotVerified;
 
             var isPasswordInvalid = !user.Credential.ValidatePassword(request.Password);
             if (isPasswordInvalid) return ApplicationErrors.PasswordIsInvalid;
-
-            _smtp.SendConfirmationEmail("tamia.bergnaum0@ethereal.email");
 
             var token = _jwt.GenerateToken(user.Id.Value);
             return token;

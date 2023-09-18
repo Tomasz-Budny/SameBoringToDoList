@@ -1,9 +1,11 @@
-﻿namespace SameBoringToDoList.Application.Services
+﻿using SameBoringToDoList.Domain.ValueObjects;
+
+namespace SameBoringToDoList.Application.Services
 {
     public interface ISmtpService
     {
-        void SendConfirmationEmail(string email);
+        void SendConfirmationEmail(Email email, Guid verificationToken);
 
-        void SendForgetPasswordEmail(string email);
+        void SendForgetPasswordEmail(Email email, Guid verificationToken);
     }
 }

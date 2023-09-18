@@ -15,7 +15,7 @@ namespace SameBoringToDoList.Domain.ValueObjects
 
         public static Result<Email> Create(string value)
         {
-            var isInvalidEmail = ValidateEmail(value);
+            var isInvalidEmail = !ValidateEmail(value);
             if (isInvalidEmail) return DomainErrors.EmailIsInvalid;
 
             return new Email(value);

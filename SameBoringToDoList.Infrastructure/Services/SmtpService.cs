@@ -6,6 +6,7 @@ using SameBoringToDoList.Application.Services;
 using SameBoringToDoList.Infrastructure.Services.Options;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using MailKit.Net.Smtp;
+using SameBoringToDoList.Domain.ValueObjects;
 
 namespace SameBoringToDoList.Infrastructure.Services
 {
@@ -17,13 +18,15 @@ namespace SameBoringToDoList.Infrastructure.Services
         {
             _smtpOptions = smtpOptions.Value;
         }
-        public void SendConfirmationEmail(string destinationEmail)
+        public void SendConfirmationEmail(Email destinationEmail, Guid verificationToken)
         {
+            var body = $"<h1>Verify Email</h1><br><p>Your confirmation token: <b>{verificationToken}</b></p>";
+
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_smtpOptions.From));
-            email.To.Add(MailboxAddress.Parse(destinationEmail));
-            email.Subject = "Sample subject";
-            email.Body = new TextPart(TextFormat.Html) { Text = "<h1>Test</h1>" };
+            email.To.Add(MailboxAddress.Parse(destinationEmail.Value));
+            email.Subject = "Verify email";
+            email.Body = new TextPart(TextFormat.Html) { Text = body };
 
             using var smtp = new SmtpClient();
             smtp.Connect(_smtpOptions.Host, _smtpOptions.Port, SecureSocketOptions.StartTls);
@@ -32,7 +35,7 @@ namespace SameBoringToDoList.Infrastructure.Services
             smtp.Disconnect(true);
         }
 
-        public void SendForgetPasswordEmail(string email)
+        public void SendForgetPasswordEmail(Email email, Guid verificationToken)
         {
             throw new NotImplementedException();
         }
