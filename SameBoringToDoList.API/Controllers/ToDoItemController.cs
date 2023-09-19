@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem;
+using SameBoringToDoList.Application.ToDoItem.Commands.DeleteToDoItem;
 using SameBoringToDoList.Application.ToDoItem.Queries.GetItemsForToDoList;
 
 namespace SameBoringToDoList.API.Controllers
@@ -31,6 +32,15 @@ namespace SameBoringToDoList.API.Controllers
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+        }
+
+        [HttpDelete("{itemTitle}")]
+        public async Task<IActionResult> DeleteItemByName([FromRoute] Guid toDoListId, [FromRoute] string itemTitle)
+        {
+            var command = new DeleteToDoItemCommand(toDoListId, itemTitle);
+            var result = await _sender.Send(command);
+
+            return result.IsSuccess ? NoContent() : BadRequest(result.Error);
         }
     }
 }

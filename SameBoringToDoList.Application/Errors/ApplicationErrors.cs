@@ -4,6 +4,8 @@ namespace SameBoringToDoList.Application.Errors
 {
     public static class ApplicationErrors
     {
+        public static readonly Error ToDoItemNotFound = new Error("ToDoItem.NotFound", "to do item has not been found!");
+
         public static readonly Error ToDoListNotFound = new Error("ToDoList.NotFound", "to do list has not been found!");
         public static readonly Error PasswordIsInvalid = new Error("Password.Invalid", "Provided password is invalid!");
 
