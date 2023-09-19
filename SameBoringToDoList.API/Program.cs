@@ -15,6 +15,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistance(configuration);
 builder.Services.AddApplication();
 builder.Services.AddShared();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AnyPolicy", builder =>
+    {
+        builder.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+    });
+});
 
 var app = builder.Build();
 
@@ -24,6 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AnyPolicy");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 

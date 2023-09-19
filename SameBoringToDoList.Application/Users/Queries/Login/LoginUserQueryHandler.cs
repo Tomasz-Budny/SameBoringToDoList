@@ -1,7 +1,6 @@
 ﻿using SameBoringToDoList.Application.Abstractions.Messaging;
 using SameBoringToDoList.Application.Authentication;
 using SameBoringToDoList.Application.Errors;
-using SameBoringToDoList.Application.Services;
 using SameBoringToDoList.Domain.Repositories;
 using SameBoringToDoList.Domain.ValueObjects;
 using SameBoringToDoList.Shared.Errors;

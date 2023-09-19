@@ -31,10 +31,10 @@ namespace SameBoringToDoList.API.Controllers
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
-        [HttpPatch("confirm")]
-        public async Task<IActionResult> ConfirmEmail([FromQuery] Guid verificationToken)
+        [HttpPost("confirm")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] Guid token)
         {
-            var command = new ConfirmEmailCommand(verificationToken);
+            var command = new ConfirmEmailCommand(token);
             var result = await _sender.Send(command);
 
             return result.IsSuccess ? Ok() : BadRequest(result.Error);
