@@ -20,9 +20,10 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Repositories
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public Task DeleteAsync(ToDoListId id, CancellationToken cancellationToken)
+        public async Task DeleteAsync(ToDoList toDoList, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _dbContext.Remove(toDoList);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<ToDoList> GetAsync(UserId authorId, ToDoListId id, CancellationToken cancellationToken)

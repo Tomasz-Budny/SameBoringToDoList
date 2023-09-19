@@ -10,6 +10,6 @@ namespace SameBoringToDoList.Domain.Repositories
         Task<IEnumerable<ToDoList>> GetAllListsWithItemsForUserAsync(UserId id, CancellationToken cancellationToken);
         Task AddAsync(ToDoList toDoList, CancellationToken cancellationToken);
         Task UpdateAsync(ToDoList toDoList, CancellationToken cancellationToken);
-        Task DeleteAsync(ToDoListId id, CancellationToken cancellationToken);
+        Task DeleteAsync(ToDoList toDoList, CancellationToken cancellationToken);
     }
 }

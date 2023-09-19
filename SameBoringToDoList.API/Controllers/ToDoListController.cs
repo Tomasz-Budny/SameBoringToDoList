@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.ToDoList.Commands.CreateToDoList;
+using SameBoringToDoList.Application.ToDoList.Commands.DeleteToDoList;
 using SameBoringToDoList.Application.ToDoList.Queries.GetAllToDoListsForUser;
 using SameBoringToDoList.Application.ToDoList.Queries.GetAllToDoListsWithItemsForUser;
 using SameBoringToDoList.Application.ToDoList.Queries.GetToDoListById;
@@ -27,12 +28,21 @@ namespace SameBoringToDoList.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetToDoList([FromRoute] GetToDoListByIdDto request)
+        public async Task<IActionResult> GetToDoList([FromRoute] Guid id)
         {
-            var query = new GetToDoListByIdQuery(request.Id);
+            var query = new GetToDoListByIdQuery(id);
             var result = await _sender.Send(query);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteToDoList([FromRoute] Guid id)
+        {
+            var query = new DeleteToDoListCommand(id);
+            var result = await _sender.Send(query);
+
+            return result.IsSuccess ? NoContent() : BadRequest(result.Error);
         }
 
         [HttpGet]
