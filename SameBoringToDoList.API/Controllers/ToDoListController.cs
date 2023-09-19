@@ -54,7 +54,7 @@ namespace SameBoringToDoList.API.Controllers
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
-        [HttpGet("items")]
+        [HttpGet("item")]
         public async Task<IActionResult> GetAllToDoListsWithItems()
         {
             var query = new GetAllToDoListsWithItemsForUserQuery();
