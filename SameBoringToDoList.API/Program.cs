@@ -11,7 +11,6 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.G
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddPersistance(configuration);
 builder.Services.AddApplication();
 builder.Services.AddShared();

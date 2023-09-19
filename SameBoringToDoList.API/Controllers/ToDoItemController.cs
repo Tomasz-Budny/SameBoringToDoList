@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SameBoringToDoList.API.Requests;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem;
 using SameBoringToDoList.Application.ToDoItem.Commands.DeleteToDoItem;
+using SameBoringToDoList.Application.ToDoItem.Commands.UpdateToDoItem;
 using SameBoringToDoList.Application.ToDoItem.Queries.GetItemsForToDoList;
 
 namespace SameBoringToDoList.API.Controllers
@@ -16,7 +18,7 @@ namespace SameBoringToDoList.API.Controllers
         public ToDoItemController(ISender sender) : base(sender) { }
 
         [HttpPost]
-        public async Task<IActionResult> AddToDo([FromRoute] Guid toDoListId,[FromBody] CreateToDoItemDto createToDoItem)
+        public async Task<IActionResult> AddToDo([FromRoute] Guid toDoListId, [FromBody] CreateToDoItemDto createToDoItem)
         {
             var id = Guid.NewGuid();
             var command = new AddToDoItemCommand(toDoListId, id, createToDoItem.Title, createToDoItem.Description);
@@ -35,12 +37,28 @@ namespace SameBoringToDoList.API.Controllers
         }
 
         [HttpDelete("{itemTitle}")]
-        public async Task<IActionResult> DeleteItemByName([FromRoute] Guid toDoListId, [FromRoute] string itemTitle)
+        public async Task<IActionResult> DeleteItemByName([FromRoute] DeleteItemByNameDto request)
         {
-            var command = new DeleteToDoItemCommand(toDoListId, itemTitle);
+            var command = new DeleteToDoItemCommand(request.ToDoListId, request.ItemTitle);
             var result = await _sender.Send(command);
 
             return result.IsSuccess ? NoContent() : BadRequest(result.Error);
+        }
+
+        [HttpPatch("{itemTitle}")]
+        public async Task<IActionResult> UpdateToDoItem([FromRoute] Guid toDoListId, [FromRoute] string itemTitle, UpdateToDoItemRequest body)
+        {
+            var command = new UpdateToDoItemCommand(
+                toDoListId,
+                itemTitle,
+                body.Title,
+                body.Description,
+                body.IsDone
+            );
+
+            var result = await _sender.Send(command);
+
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
     }
 }
