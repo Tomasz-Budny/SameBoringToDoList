@@ -18,7 +18,7 @@ namespace SameBoringToDoList.API.Controllers
         public ToDoListController(ISender sender) : base(sender) { }
 
         [HttpPost]
-        public async Task<IActionResult> CreateToDoList([FromBody] CreateToDoListDto request)
+        public async Task<IActionResult> CreateToDoList([FromBody] CreateToDoListRequest request)
         {
             var id = Guid.NewGuid();
             var command = new CreateToDoListCommand(id, request.Title);

@@ -1,4 +1,4 @@
-﻿namespace SameBoringToDoList.API.Requests
+﻿namespace SameBoringToDoList.Application.DTO
 {
     public record UpdateToDoItemRequest(
         string? Title = null,

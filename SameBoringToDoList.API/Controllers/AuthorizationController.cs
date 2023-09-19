@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.Users.Commands.ChangePassword;
@@ -40,6 +41,7 @@ namespace SameBoringToDoList.API.Controllers
             return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
+        [Authorize]
         [HttpPatch("password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SameBoringToDoList.API.Requests;
 using SameBoringToDoList.Application.DTO;
 using SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem;
 using SameBoringToDoList.Application.ToDoItem.Commands.DeleteToDoItem;
@@ -18,7 +17,7 @@ namespace SameBoringToDoList.API.Controllers
         public ToDoItemController(ISender sender) : base(sender) { }
 
         [HttpPost]
-        public async Task<IActionResult> AddToDo([FromRoute] Guid toDoListId, [FromBody] CreateToDoItemDto createToDoItem)
+        public async Task<IActionResult> AddToDo([FromRoute] Guid toDoListId, [FromBody] CreateToDoItemRequest createToDoItem)
         {
             var id = Guid.NewGuid();
             var command = new AddToDoItemCommand(toDoListId, id, createToDoItem.Title, createToDoItem.Description);
@@ -37,7 +36,7 @@ namespace SameBoringToDoList.API.Controllers
         }
 
         [HttpDelete("{itemTitle}")]
-        public async Task<IActionResult> DeleteItemByName([FromRoute] DeleteItemByNameDto request)
+        public async Task<IActionResult> DeleteItemByName([FromRoute] DeleteItemByNameRequest request)
         {
             var command = new DeleteToDoItemCommand(request.ToDoListId, request.ItemTitle);
             var result = await _sender.Send(command);
