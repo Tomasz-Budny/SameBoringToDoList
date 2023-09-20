@@ -1,14 +1,11 @@
-﻿using SameBoringToDoList.Domain.ValueObjects;
-using SameBoringToDoList.Shared.Domain.Primitives;
-
-namespace SameBoringToDoList.Domain.Entities
+﻿namespace SameBoringToDoList.Domain.ValueObjects
 {
-    public class ToDoItem: Entity<ToDoItemId>
+    public record ToDoItem
     {
         public ToDoItemTitle Title { get; set; }
         public ToDoItemDescription Description { get; set; }
         public bool IsDone { get; set; }
-        public ToDoItem(ToDoItemId id, ToDoItemTitle title, ToDoItemDescription description, bool isDone): base(id)
+        public ToDoItem(ToDoItemTitle title, ToDoItemDescription description, bool isDone)
         {
             Title = title;
             Description = description;

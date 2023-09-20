@@ -29,7 +29,6 @@ namespace SameBoringToDoList.Application.ToDoItems.Commands.DeleteToDoItem
             var toDoList = await _toDoListRepository.GetAsync(userId, toDoListId, cancellationToken);
             if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
 
-            //var item = toDoList.ToDoItems.FirstOrDefault(x => x.Title == request.Title);
             var toDoItem = toDoList.GetItem(request.Title);
             if (toDoItem.IsFailure) return toDoItem.Error;
 

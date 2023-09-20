@@ -42,13 +42,9 @@ namespace SameBoringToDoList.Infrastructure.Persistence.Configurations
             builder.OwnsMany(x => x.ToDoItems, ib =>
             {
                 ib.ToTable("ToDoItems");
+                ib.Property<Guid>("Id");
                 ib.HasKey("Id", "ToDoListId");
                 ib.WithOwner().HasForeignKey("ToDoListId");
-                ib.Property(x => x.Id)
-                    .HasConversion(
-                    id => id.Value,
-                    value => ToDoItemId.Create(value)
-                );
                 ib.Property(x => x.Title)
                     .HasConversion(
                     title => title.Value,

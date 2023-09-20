@@ -27,16 +27,13 @@ namespace SameBoringToDoList.Application.ToDoItems.Commands.AddToDoItem
             var toDoList = await _toDoListRepository.GetAsync(authorId, toDoListId, cancellationToken);
             if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
 
-            var id = ToDoItemId.Create(request.itemId);
-            if (id.IsFailure) return id.Error;
-
             var title = ToDoItemTitle.Create(request.Title);
             if (title.IsFailure) return title.Error;
 
             var description = ToDoItemDescription.Create(request.Description);
             if (description.IsFailure) return description.Error;
 
-            var toDoItem = new ToDoItem(id, title, description, false);
+            var toDoItem = new ToDoItem(title, description, false);
 
             var addResult = toDoList.Add(toDoItem);
             if (addResult.IsFailure) return addResult.Error;

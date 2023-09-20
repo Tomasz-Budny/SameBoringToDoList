@@ -29,7 +29,7 @@ namespace SameBoringToDoList.Application.ToDoItems.Queries.GetItemsForToDoList
             var toDoList = await _toDoListRepository.GetAsync(senderId, toDoListId, cancellationToken);
             if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
 
-            var toDoItems = toDoList.ToDoItems.Select(item => item.AsDTO()).ToList();
+            var toDoItems = toDoList.ToDoItems.Select(item => item.AsDto()).ToList();
             return toDoItems;
         }
     }
