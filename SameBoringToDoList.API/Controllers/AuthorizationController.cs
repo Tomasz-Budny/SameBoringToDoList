@@ -15,37 +15,37 @@ namespace SameBoringToDoList.API.Controllers
         public AuthorizationController(ISender sender) : base(sender) { }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserDto request)
+        public async Task<IActionResult> Register(RegisterUserDto request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
             var command = new RegisterUserCommand(id, request.Email, request.Password);
-            var result = await _sender.Send(command);
+            var result = await _sender.Send(command, cancellationToken);
 
             return result.IsSuccess ? Created(CreateResourceLocationUrl(id), null) : BadRequest(result.Error);  
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserQuery query)
+        public async Task<IActionResult> Login(LoginUserQuery query, CancellationToken cancellationToken)
         {
-            var result = await _sender.Send(query);
+            var result = await _sender.Send(query, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
         [HttpPost("confirm")]
-        public async Task<IActionResult> ConfirmEmail([FromQuery] Guid token)
+        public async Task<IActionResult> ConfirmEmail([FromQuery] Guid token, CancellationToken cancellationToken)
         {
             var command = new ConfirmEmailCommand(token);
-            var result = await _sender.Send(command);
+            var result = await _sender.Send(command, cancellationToken);
 
             return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
         [Authorize]
         [HttpPatch("password")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
+        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command, CancellationToken cancellationToken)
         {
-            var result = await _sender.Send(command);
+            var result = await _sender.Send(command, cancellationToken);
 
             return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }

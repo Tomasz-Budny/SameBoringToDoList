@@ -18,47 +18,47 @@ namespace SameBoringToDoList.API.Controllers
         public ToDoListController(ISender sender) : base(sender) { }
 
         [HttpPost]
-        public async Task<IActionResult> CreateToDoList([FromBody] CreateToDoListRequest request)
+        public async Task<IActionResult> CreateToDoList([FromBody] CreateToDoListRequest request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
             var command = new CreateToDoListCommand(id, request.Title);
-            var result = await _sender.Send(command);
+            var result = await _sender.Send(command, cancellationToken);
 
             return result.IsSuccess ? Created(CreateResourceLocationUrl(id), null): BadRequest(result.Error);
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetToDoList([FromRoute] Guid id)
+        public async Task<ActionResult<ToDoListDto>> GetToDoList([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var query = new GetToDoListByIdQuery(id);
-            var result = await _sender.Send(query);
+            var result = await _sender.Send(query, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteToDoList([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteToDoList([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var query = new DeleteToDoListCommand(id);
-            var result = await _sender.Send(query);
+            var result = await _sender.Send(query, cancellationToken);
 
             return result.IsSuccess ? NoContent() : BadRequest(result.Error);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllToDoLists()
+        public async Task<ActionResult<IEnumerable<ToDoListDto>>> GetAllToDoLists(CancellationToken cancellationToken)
         {
             var query = new GetAllToDoListsForUserQuery();
-            var result = await _sender.Send(query);
+            var result = await _sender.Send(query, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
         [HttpGet("item")]
-        public async Task<IActionResult> GetAllToDoListsWithItems()
+        public async Task<ActionResult<IEnumerable<ToDoListWithItemsDto>>> GetAllToDoListsWithItems(CancellationToken cancellationToken)
         {
             var query = new GetAllToDoListsWithItemsForUserQuery();
-            var result = await _sender.Send(query);
+            var result = await _sender.Send(query, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }

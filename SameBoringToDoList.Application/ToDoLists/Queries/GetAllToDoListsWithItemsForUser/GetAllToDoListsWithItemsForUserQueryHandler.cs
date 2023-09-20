@@ -28,7 +28,7 @@ namespace SameBoringToDoList.Application.ToDoLists.Queries.GetAllToDoListsWithIt
             var toDoLists = await _toDoListRepository.GetAllListsWithItemsForUserAsync(authorId, cancellationToken);
             if (toDoLists == null) return ApplicationErrors.ToDoListNotFound;
 
-            return toDoLists.Select(x => x.AsDtoWithItems()).ToList();
+            return Result.Success(toDoLists.Select(x => x.AsDtoWithItems()));
         }
     }
 }
