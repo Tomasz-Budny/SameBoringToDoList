@@ -13,10 +13,8 @@ namespace SameBoringToDoList.Domain.ValueObjects
             Value = value;
         }
 
-        public static Result<ToDoItemTitle> Create(string? value)
+        public static Result<ToDoItemTitle> Create(string value)
         {
-            if (value == null) 
-                return DomainErrors.NullReference;
             if (value.Length > _titleMaxLength) 
                 return DomainErrors.ToDoItemTitleIsTooLong(_titleMaxLength);
 

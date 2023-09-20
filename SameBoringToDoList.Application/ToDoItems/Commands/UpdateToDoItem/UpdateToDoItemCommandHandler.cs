@@ -31,17 +31,15 @@ namespace SameBoringToDoList.Application.ToDoItems.Commands.UpdateToDoItem
             var toDoItem = toDoList.GetItem(request.Title);
             if (toDoItem.IsFailure) return toDoItem.Error;
 
-            var itemTitle = ToDoItemTitle.Create(request.NewTitle);
-            if (itemTitle.IsFailure) itemTitle = toDoItem.Value.Title;
+            var itemTitle = ToDoItemTitle.Create(request.NewTitle ?? toDoItem.Value.Title);
+            if (itemTitle.IsFailure) return itemTitle.Error;
 
-            var itemDescription = ToDoItemDescription.Create(request.NewDescription);
-            if (itemDescription.IsFailure) itemDescription = toDoItem.Value.Description;
-
-            var isDone = request.IsDone != null ? (bool)request.IsDone : toDoItem.Value.IsDone;
+            var itemDescription = ToDoItemDescription.Create(request.NewDescription ?? toDoItem.Value.Description);
+            if (itemDescription.IsFailure) return itemDescription.Error;
 
             toDoItem.Value.Title = itemTitle;
             toDoItem.Value.Description = itemDescription;
-            toDoItem.Value.IsDone = isDone;
+            toDoItem.Value.IsDone = request.IsDone ?? toDoItem.Value.IsDone;
 
             await _toDoListRepository.UpdateAsync(toDoList, cancellationToken);
 

@@ -29,7 +29,7 @@ namespace SameBoringToDoList.Application.ToDoItems.Commands.DeleteToDoItem
             var toDoList = await _toDoListRepository.GetAsync(userId, toDoListId, cancellationToken);
             if (toDoList == null) return ApplicationErrors.ToDoListNotFound;
 
-            var toDoItem = toDoList.GetItem(request.Title);
+            var toDoItem = toDoList.GetItem(request.ToDoItemTitle);
             if (toDoItem.IsFailure) return toDoItem.Error;
 
             toDoList.Remove(toDoItem);

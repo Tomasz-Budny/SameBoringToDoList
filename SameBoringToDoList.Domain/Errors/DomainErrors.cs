@@ -27,7 +27,5 @@ namespace SameBoringToDoList.Domain.Errors
         public static readonly Func<int, Error> ToDoListTitleIsTooLong = (int maxLength) => new Error("ToDoList.TitleTooLong", $"ToDoList title is too long! Maximum acceptable length is {maxLength}.");
         public static readonly Func<string, ToDoListId, Error> ToDoItemWithTitleDoesNotExist = (string ToDoItem, ToDoListId ToDoListId) => new Error("ToDoList.ItemWithTitleDoesNotExist", $"ToDoItem with name {ToDoItem} does not exist on list with id: {ToDoListId}");
         public static readonly Func<ToDoItemId, ToDoListId, Error> ToDoItemWithIdDoesNotExist = (ToDoItemId ToDoItemId, ToDoListId ToDoListId) => new Error("ToDoList.ItemWithIdDoesNotExist", $"ToDoItem with id {ToDoItemId} does not exist on list with id: {ToDoListId}");
-
-        public static readonly Error NullReference = new Error("Value.IsNull", "Value can not be null!");
     }
 }

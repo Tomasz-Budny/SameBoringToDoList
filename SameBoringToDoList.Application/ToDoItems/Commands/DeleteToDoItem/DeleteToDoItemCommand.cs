@@ -2,5 +2,5 @@
 
 namespace SameBoringToDoList.Application.ToDoItems.Commands.DeleteToDoItem
 {
-    public record DeleteToDoItemCommand(Guid ToDoListId, string Title) : ICommand;
+    public record DeleteToDoItemCommand(Guid ToDoListId, string ToDoItemTitle) : ICommand;
 }
