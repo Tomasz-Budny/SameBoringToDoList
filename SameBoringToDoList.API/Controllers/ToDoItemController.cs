@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SameBoringToDoList.Application.DTO;
-using SameBoringToDoList.Application.ToDoItem.Commands.AddToDoItem;
-using SameBoringToDoList.Application.ToDoItem.Commands.DeleteToDoItem;
-using SameBoringToDoList.Application.ToDoItem.Commands.UpdateToDoItem;
-using SameBoringToDoList.Application.ToDoItem.Queries.GetItemsForToDoList;
+using SameBoringToDoList.Application.ToDoItems.Commands.AddToDoItem;
+using SameBoringToDoList.Application.ToDoItems.Commands.DeleteToDoItem;
+using SameBoringToDoList.Application.ToDoItems.Commands.UpdateToDoItem;
+using SameBoringToDoList.Application.ToDoItems.Queries.GetItemsForToDoList;
 
 namespace SameBoringToDoList.API.Controllers
 {

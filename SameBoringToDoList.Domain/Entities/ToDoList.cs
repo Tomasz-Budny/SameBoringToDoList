@@ -53,5 +53,14 @@ namespace SameBoringToDoList.Domain.Entities
 
             return Result.Success();
         }
+
+        public Result<ToDoItem> GetItem(string toDoItemTitle)
+        {
+            var toDoItem = _toDoItems.SingleOrDefault(todo => todo.Title == toDoItemTitle);
+            if (toDoItem == null)
+                return DomainErrors.ToDoItemWithTitleDoesNotExist(toDoItemTitle, this.Id);
+
+            return toDoItem;
+        }
     }
 }
